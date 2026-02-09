@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VETMAQ</title>
+    <style>
+        :root {
+            --stihl-orange: #ff6600;
+            --stihl-grey: #444444;
+            --dark: #1a1a1a;
+            --white: #ffffff;
+        }
+
+        body { font-family: 'Arial Black', sans-serif; margin: 0; background-color: #f0f0f0; }
+
+        /* HEADER */
+        header {
+            background-color: var(--dark);
+            border-bottom: 5px solid var(--stihl-orange);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        header h1 { color: var(--white); margin: 0; text-transform: uppercase; font-size: 2.2rem; }
+        header h1 span { color: var(--stihl-orange); }
+
+        .search-container { width: 90%; max-width: 600px; }
+        #busca {
+            width: 100%; padding: 12px 20px;
+            border: 2px solid var(--stihl-grey);
+            border-radius: 25px; font-size: 1rem; outline: none;
+        }
+
+        /* VITRINE */
+        .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+        .grid-produtos { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+
+        .card {
+            background: var(--white); padding: 15px;
+            border-bottom: 4px solid #ddd; transition: 0.3s;
+            display: flex; flex-direction: column; text-align: center; cursor: pointer;
+        }
+
+        .card:hover { border-color: var(--stihl-orange); transform: translateY(-5px); }
+        .card img { width: 100%; height: 180px; object-fit: contain; background: #fff; }
+        .card h3 { margin: 10px 0; color: var(--dark); font-size: 0.9rem; height: 40px; overflow: hidden; }
+        .card .preco { color: var(--stihl-orange); font-size: 1.2rem; font-weight: bold; margin-bottom: 10px; }
+
+        /* MODAL GALERIA */
+        #modal-galeria {
+            display: none; position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); z-index: 1000;
+            justify-content: center; align-items: center;
+        }
+
+        .modal-content {
+            background: white; padding: 20px; max-width: 600px;
+            width: 90%; position: relative; border-radius: 8px; text-align: center;
+        }
+
+        .fechar-modal { position: absolute; top: -40px; right: 0; color: white; font-size: 35px; cursor: pointer; }
+        #img-principal { width: 100%; height: 350px; object-fit: contain; }
+        .thumbnails { display: flex; gap: 10px; justify-content: center; margin-top: 15px; overflow-x: auto; }
+        .thumbnails img { width: 60px; height: 60px; object-fit: cover; cursor: pointer; border: 2px solid #eee; }
+        .thumbnails img.active { border-color: var(--stihl-orange); }
+
+        footer { background: var(--dark); color: white; text-align: center; padding: 20px; margin-top: 40px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-content">
+        <h1>VET<span>MAQ</span></h1>
+        <div class="search-container">
+            <input type="text" id="busca" placeholder="Pesquisar Motosserra, Roçadeira, Soprador...">
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <div class="grid-produtos" id="vitrine"></div>
+</div>
+
+<div id="modal-galeria">
+    <div class="modal-content">
+        <span class="fechar-modal" onclick="fecharModal()">&times;</span>
+        <img id="img-principal" src="">
+        <h2 id="modal-titulo" style="text-transform: uppercase; font-size: 1.2rem; margin: 15px 0;"></h2>
+        <div class="thumbnails" id="modal-thumbs"></div>
+        <button id="btn-whats-modal" style="background:#25d366; color:white; border:none; padding:12px; cursor:pointer; font-weight:bold; width: 100%; margin-top: 10px; border-radius: 5px;">CONVERSAR NO WHATSAPP</button>
+    </div>
+</div>
+
+<footer><p>&copy; 2026 VETMAQ - AUTORIZADA - STIHL</p></footer>
+
+<script>
+    const produtos = [
+        { nome: "Motosserra MS 162", preco: "Consulte Preço", fotos: ["https://images.tcdn.com.br/img/img_prod/972835/motosserra_stihl_ms_162_a_gasolina_7307_1_78b02ea9984159a379f64894e8f0153a.png"] },
+        { nome: "Motosserra MS 172", preco: "Consulte Preço", fotos: ["https://cdnv2.moovin.com.br/bimagril/imagens/produtos/det/motosserra-a-gasolina-ms-172-c-be-stihl-d81fc2672efe0e6a70c60e09596d34a7.webp"] },
+        { nome: "Motosserra MS 180 C", preco: "Consulte Preço", fotos: ["https://http2.mlstatic.com/D_NQ_NP_848061-MLA100008252295_122025-O.webp"] },
+        { nome: "Motosserra MS 182", preco: "Consulte Preço", fotos: ["https://cdnv2.moovin.com.br/bimagril/imagens/produtos/det/motosserra-a-gasolina-ms-182-stihl-f849887593ebf4182b74f88f434ff7ed.webp"] },
+        { nome: "Motosserra ms 212", preco: "Consulte Preço", fotos: ["https://cdn.awsli.com.br/1102/1102430/produto/2587280274b60df4fc4.jpg"] },
+        { nome: "Motosserra MS 250", preco: "Consulte Preço", fotos: ["https://images.tcdn.com.br/img/img_prod/972835/motosserra_stihl_ms_250_com_sabre_a_gasolina_2317_1_9da93dcb2c6ca4f9ea95664e2f0064c4.png"] },
+        { nome: "Motosserra MS 260", preco: "Consulte Preço", fotos: ["https://images.tcdn.com.br/img/img_prod/1340586/motosserra_a_gasolina_stihl_ms_260_37_1_298d44b33b60646e83a6f2cd75d64baa.jpg"] },
+        { nome: "Motosserra MS 363", preco: "Consulte Preço", fotos: ["https://www.stihl.com.br/content/dam/stihl/media/pim/117454.jpg"] },
+        { nome: "Motoserra MS 382", preco: "Consulte Preço", fotos: ["https://cdnv2.moovin.com.br/bimagril/imagens/produtos/det/motosserra-a-gasolina-ms-382-stihl-a727db31cee5ee5eb471f1688f5dd147.webp"] },
+        { nome: "Motosserra MS 462", preco: "Consulte Preço", fotos: ["https://cdnv2.moovin.com.br/bimagril/imagens/produtos/det/motosserra-a-gasolina-ms-462-stihl-7859bf2fb36bc70dc28c8b00c25d4314.webp"] },
+        { nome: "Motosserra MS 661", preco: "Consulte Preço", fotos: ["https://images.tcdn.com.br/img/img_prod/972835/motosserra_stihl_ms_661_com_sabre_a_gasolina_2303_1_b800c96ec8a3e31975e173a563ae654a.png"] },
+        { nome: "Rossadeira FSA 30", preco: "Consulte Preço", fotos: ["https://images.tcdn.com.br/img/img_prod/502737/rocadeira_a_bateria_stihl_fsa_30_240w_0_13_kw_kit_com_bateria_as2_carregador_al1_e_cabecote_de_nylon_4582_1_8a48d7671ae6c0760643d26e9c56331e_20251013164612.jpg"] },
+        { nome: "Rossadeira FS 38", preco: "Consulte Preço", fotos: ["https://cdn.shoppub.io/cdn-cgi/image/w=1000,h=1000,q=80,f=auto/csferramentas/media/uploads/produtos/foto/zxhqkssm/05646.jpg"] },
+         { nome: "Rossadeira FS 55 R", preco: "Consulte Preço", fotos: ["https://cdn.awsli.com.br/1102/1102430/produto/127225276/stihl-fs-55-trvpwe.jpg"] },
+           { nome: "Rossadeira FS 80", preco: "Consulte Preço", fotos: ["https://casadopicapau.vtexassets.com/arquivos/ids/167004/Stihl-fs80.png?v=638884383893970000"] },
+              { nome: "Rossadeira FS 85", preco: "Consulte Preço", fotos: ["https://stihlferramentas.vtexassets.com/arquivos/ids/156128/FS-85-1080X1080--1-.jpg?v=638790421501500000"] },
+                 { nome: "Rossadeira FS 120", preco: "Consulte Preço", fotos: ["https://cdn.awsli.com.br/1102/1102430/produto/130066359/0d82f0f814.jpg"] },
+                  { nome: "Rossadeira FS 161", preco: "Consulte Preço", fotos: ["https://images.tcdn.com.br/img/img_prod/972835/rocadeira_stihl_fs_161_a_gasolina_7157_2_aae02f1e144cd3388117fafafbd5e0f4.png"] },
+                   { nome: "Rossadeira FS 221", preco: "Consulte Preço", fotos: ["https://cdn.awsli.com.br/1102/1102430/produto/237855304/rocadeira-stihl-fs-221-c-rgf185kn38.jpg"] },
+                    { nome: "Rossadeira FS 291", preco: "Consulte Preço", fotos: ["https://camagri.com.br/wp-content/uploads/2025/03/291.webp"] },
+                     { nome: "Rossadeira FS 460", preco: "Consulte Preço", fotos: ["https://casadopicapau.vtexassets.com/arquivos/ids/169028/Rocadeira-FS-460-Stihl-TrimCut-.png.png?v=638804240635970000"] },
+    { nome: "Pulverizador SR 420", preco: "Consulte Preço", fotos: ["https://stihlferramentas.vtexassets.com/arquivos/ids/155657/97307_SR420_HQ_P_2022-10_0001_EU---usable-RoW.jpg?v=638958378106900000"] },
+                     { nome: "Pulverizador SR 430", preco: "Consulte Preço", fotos: ["https://www.kraakmantuinmachines.com/cdn/shop/products/img_6017cbd8-bc45-4912-b986-06265da8d706_500x.jpg?v=1677605060"] },
+                     { nome: "Pulverizador SR 450", preco: "Consulte Preço", fotos: ["https://casadopicapau.vtexassets.com/arquivos/ids/167173/Pulverizador-Stihl-sr-450--1-.png?v=638641842198130000"] },
+                      { nome: "Soprador BR 420", preco: "Consulte Preço", fotos: ["https://images.tcdn.com.br/img/img_prod/829607/soprador_a_combusto_stihl_br_420_1_20251203170328_d28e2095c7a7.png"] },
+                      { nome: "Soprador BR 430", preco: "Consulte Preço", fotos: ["https://images.tcdn.com.br/img/img_prod/502737/soprador_costal_a_combustao_stihl_br_430_2_9kw_63_3cc_5032_1_e37f0bc6efd4b4236a08ebc4945b294e_20251013164950.jpg"] },
+                      { nome: "Soprador BR 800", preco: "Consulte Preço", fotos: ["https://www.stihl.com.br/content/dam/stihl/media/pim/6789.jpg.transform/StihlImageGallery-mq4/img.jpg"] },
+                      { nome: "SG 11", preco: "Consulte Preço", fotos: ["https://stihlferramentas.vtexassets.com/arquivos/ids/155485/36463_Z-SG11-S001_EU---usable-RoW.jpg?v=638334251658500000"] },
+                       { nome: "SG 20", preco: "Consulte Preço", fotos: ["https://http2.mlstatic.com/D_NQ_NP_892930-MLA95878403968_102025-O.webp"] },
+                       { nome: "SG 71", preco: "Consulte Preço", fotos: ["https://images.tcdn.com.br/img/img_prod/502737/pulverizador_costal_manual_stihl_sg_71_18_litros_5082_1_0df665a082377a364088d551440f4000_20251013165236.jpg"] },
+                       { nome: "SG 71", preco: "Consulte Preço", fotos: ["https://images.tcdn.com.br/img/img_prod/502737/pulverizador_costal_manual_stihl_sg_71_18_litros_5082_1_0df665a082377a364088d551440f4000_20251013165236.jpg"] },
+                       { nome: "Soprador BG 50", preco: "Consulte Preço", fotos: ["https://images.tcdn.com.br/img/img_prod/1340586/sopradora_gasolina_stihl_bg_50_101_1_c2b8b27046cb975236a78bf4ef97ac3c.jpg"] },
+                       { nome: "Soprador BG 56", preco: "Consulte Preço", fotos: ["https://cdnv2.moovin.com.br/bimagril/imagens/produtos/det/soprador-bg-56-a-gasolina-stihl-7e3279c5b61e9b01396877387e6c7f54.webp"] },
+                       { nome: "Soprador BG 86 C-E", preco: "Consulte Preço", fotos: ["https://cdn.shoppub.io/cdn-cgi/image/w=1000,h=1000,q=80,f=auto/csferramentas/media/uploads/produtos/foto/eabpsttb/17724.jpg"] },
+ { nome: "Soprador Eletrico BGE 71", preco: "Consulte Preço", fotos: ["https://images.tcdn.com.br/img/img_prod/972835/soprador_stihl_bge_71_cod_4811_011_1505_127v_ou_4811_011_1506_220v_eletrico_4619_1_57af1ffebf67f8d6f7f3a32e17f99ae9.png"] },
+ { nome: "Soprador a Bateria BGA 45", preco: "Consulte Preço", fotos: ["https://www.stihl.com.br/content/dam/stihl/media/pim/43466.jpg"] },
+ { nome: "Soprador a Bateria BGA 45", preco: "Consulte Preço", fotos: ["https://www.stihl.com.br/content/dam/stihl/media/pim/43466.jpg"] },
+{ nome: "Soprador SH 56", preco: "Consulte Preço", fotos: ["https://gkseg.agilecdn.com.br/32690_1.jpg"] },
+{ nome: "Podador HS 45", preco: "Consulte Preço", fotos: ["https://images.tcdn.com.br/img/img_prod/1004808/podador_stihl_hs_45_a_gasolina_1_1_cv_697_1_4808947c5ded4432fae1f03fef76c045.jpg"] },
+{ nome: "Podador HSA 26", preco: "Consulte Preço", fotos: ["https://casadopicapau.vtexassets.com/arquivos/ids/167451-800-auto?v=638657163272770000&width=800&height=auto&aspect=true"] },
+{ nome: "Podador HSA 30", preco: "Consulte Preço", fotos: ["https://stihlferramentas.vtexassets.com/arquivos/ids/156074-800-auto?v=638422956587730000&width=800&height=auto&aspect=true"] },
+{ nome: "Podador HSA 45", preco: "Consulte Preço", fotos: ["https://cdnv2.moovin.com.br/bimagril/imagens/produtos/det/podador-hsa-45-a-bateria-com-carregador-stihl-5a69c604b3cd48ea73a89ccb1488a8d7.webp"] },
+{ nome: "Podador GTA 26", preco: "Consulte Preço", fotos: ["https://casadopicapau.vtexassets.com/arquivos/ids/167449-800-auto?v=638657140243370000&width=800&height=auto&aspect=true"] },
+{ nome: "Podador GTA 26", preco: "Consulte Preço", fotos: ["https://casadopicapau.vtexassets.com/arquivos/ids/167449-800-auto?v=638657140243370000&width=800&height=auto&aspect=true"] },
+
+ ];
+
+    const vitrine = document.getElementById('vitrine');
+    const campoBusca = document.getElementById('busca');
+    const modal = document.getElementById('modal-galeria');
+
+    // Função para abrir o WhatsApp
+    function irParaWhats(nomeProduto) {
+        const numero = "5597991840894";
+        const mensagem = encodeURIComponent(`Olá! Tenho interesse no produto: ${nomeProduto}. Gostaria de mais informações.`);
+        window.open(`https://wa.me/${numero}?text=${mensagem}`, '_blank');
+    }
+
+    function renderizar(lista) {
+        vitrine.innerHTML = "";
+        lista.forEach(p => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            // Clique no card abre a galeria
+            card.onclick = () => abrirGaleria(p);
+            
+            card.innerHTML = `
+                <img src="${p.fotos[0]}" onerror="this.src='https://via.placeholder.com/250x200?text=Imagem+Indisponível'">
+                <h3>${p.nome}</h3>
+                <p class="preco">${p.preco}</p>
+                <button onclick="event.stopPropagation(); irParaWhats('${p.nome}')" style="background:var(--stihl-orange); color:white; border:none; padding:10px; cursor:pointer; font-weight:bold; border-radius: 5px;">NEGOCIAR</button>
+            `;
+            vitrine.appendChild(card);
+        });
+    }
+
+    function abrirGaleria(p) {
+        document.getElementById('img-principal').src = p.fotos[0];
+        document.getElementById('modal-titulo').innerText = p.nome;
+        
+        // Configura o botão do modal também
+        document.getElementById('btn-whats-modal').onclick = () => irParaWhats(p.nome);
+
+        const thumbs = document.getElementById('modal-thumbs');
+        thumbs.innerHTML = "";
+        
+        p.fotos.forEach((f, i) => {
+            const t = document.createElement('img');
+            t.src = f;
+            t.onclick = (e) => {
+                e.stopPropagation();
+                document.getElementById('img-principal').src = f;
+            };
+            thumbs.appendChild(t);
+        });
+        modal.style.display = "flex";
+    }
+
+    function fecharModal() { modal.style.display = "none"; }
+    window.onclick = (e) => { if(e.target == modal) fecharModal(); };
+
+    campoBusca.addEventListener('input', (e) => {
+        const termo = e.target.value.toLowerCase();
+        renderizar(produtos.filter(p => p.nome.toLowerCase().includes(termo)));
+    });
+
+    renderizar(produtos);
+</script>
+</body>
+</html>
