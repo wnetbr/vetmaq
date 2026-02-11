@@ -39,7 +39,6 @@
             animation: moveGradient 12s ease-in-out infinite alternate;
         }
 
-        /* Efeito de Partículas Flutuantes Estilo STIHL */
         body::after {
             content: "";
             position: fixed;
@@ -64,7 +63,6 @@
             0% { transform: translateY(0) rotate(0deg); }
             100% { transform: translateY(-60px) rotate(5deg); }
         }
-        /* ------------------------------------ */
 
         /* BARRA DE ROLAGEM PERSONALIZADA */
         ::-webkit-scrollbar { width: 10px; }
@@ -105,6 +103,7 @@
             padding: 0 20px;
         }
 
+        /* --- ANIMAÇÃO DO NOME VETMAQ --- */
         header h1 { 
             color: var(--white); 
             margin: 0 0 15px 0; 
@@ -113,8 +112,27 @@
             letter-spacing: -1px;
             font-weight: 900;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: stihlColors 6s infinite alternate; /* Adicionado */
         }
-        header h1 span { color: var(--stihl-orange); }
+
+        /* O Span "MAQ" também segue a animação de forma invertida ou fixa */
+        header h1 span { 
+            color: var(--stihl-orange); 
+            animation: stihlColorsSpan 6s infinite alternate; /* Adicionado */
+        }
+
+        @keyframes stihlColors {
+            0% { color: var(--white); }
+            50% { color: var(--stihl-orange); }
+            100% { color: #ff9955; } /* Um tom de laranja mais claro, estilo STIHL */
+        }
+
+        @keyframes stihlColorsSpan {
+            0% { color: var(--stihl-orange); }
+            50% { color: var(--white); }
+            100% { color: var(--stihl-orange); }
+        }
+        /* -------------------------------- */
 
         /* BUSCA */
         .search-container { 
