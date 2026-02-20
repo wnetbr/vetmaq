@@ -3,538 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VETMAQ</title>
+    <title>VETMAQ | Em Manutenção</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --stihl-orange: #FF6600;
-            --stihl-orange-hover: #e65c00;
-            --stihl-grey-dark: #212121;
-            --stihl-grey-medium: #444444;
-            --stihl-grey-light: #f4f4f4;
-            --stihl-border: #e0e0e0;
-            --whatsapp-green: #25D366;
+            --stihl-grey: #212121;
             --white: #ffffff;
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        /* --- FUNDO DINÂMICO SURPREENDENTE --- */
         body {
-            background-color: #f4f4f4;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -2;
-            background: 
-                radial-gradient(circle at 0% 0%, rgba(255, 102, 0, 0.08) 0%, transparent 35%),
-                radial-gradient(circle at 100% 100%, rgba(255, 102, 0, 0.05) 0%, transparent 35%),
-                radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 1) 0%, rgba(224, 224, 224, 1) 100%);
-            background-size: 200% 200%;
-            animation: moveGradient 12s ease-in-out infinite alternate;
-        }
-
-        body::after {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-            opacity: 0.4;
-            background-image: 
-                radial-gradient(var(--stihl-orange) 1px, transparent 1px),
-                radial-gradient(var(--stihl-grey-dark) 1px, transparent 1px);
-            background-size: 60px 60px;
-            background-position: 0 0, 30px 30px;
-            animation: moveParticles 20s linear infinite;
-            pointer-events: none;
-        }
-
-        @keyframes moveGradient {
-            0% { background-position: 0% 0%; }
-            100% { background-position: 100% 100%; }
-        }
-
-        @keyframes moveParticles {
-            0% { transform: translateY(0) rotate(0deg); }
-            100% { transform: translateY(-60px) rotate(5deg); }
-        }
-
-        /* BARRA DE ROLAGEM PERSONALIZADA */
-        ::-webkit-scrollbar { width: 10px; }
-        ::-webkit-scrollbar-track { background: var(--stihl-grey-light); }
-        ::-webkit-scrollbar-thumb { background: var(--stihl-orange); border-radius: 5px; }
-
-        body { 
-            font-family: 'Roboto', sans-serif; 
-            margin: 0; 
-            color: var(--stihl-grey-dark);
-            line-height: 1.6;
-        }
-
-        /* --- HEADER COM IMAGEM DE FUNDO COMPLETA --- */
-        header {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
-                        url('https://i.ibb.co/Cpxr3pTp/Screenshot-2026-02-14-at-10-52-19-Google-Gemini.png');
+            font-family: 'Roboto', sans-serif;
+            background: var(--stihl-grey);
+            background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                              url('');
             background-size: cover;
             background-position: center;
-            background-repeat: no-repeat;
-            
-            border-bottom: 6px solid var(--stihl-orange);
-            padding: 40px 0;
-            position: sticky;
-            top: 0;
-            z-index: 10000;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-            animation: fadeInDown 0.5s ease;
-        }
-
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 0 20px;
-        }
-
-        /* --- ANIMAÇÃO DO NOME VETMAQ --- */
-        header h1 { 
-            color: var(--white); 
-            margin: 0 0 15px 0; 
-            text-transform: uppercase; 
-            font-size: 2.8rem; 
-            letter-spacing: -1px;
-            font-weight: 900;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
-            animation: stihlColors 6s infinite alternate; 
-        }
-
-        header h1 span { 
-            color: var(--stihl-orange); 
-            animation: stihlColorsSpan 6s infinite alternate; 
-        }
-
-        @keyframes stihlColors {
-            0% { color: var(--white); }
-            50% { color: var(--stihl-orange); }
-            100% { color: #ff9955; }
-        }
-
-        @keyframes stihlColorsSpan {
-            0% { color: var(--stihl-orange); }
-            50% { color: var(--white); }
-            100% { color: var(--stihl-orange); }
-        }
-
-        /* BUSCA */
-        .search-container { 
-            width: 100%; 
-            max-width: 700px; 
-            position: relative;
-        }
-        #busca {
-            width: 100%; 
-            padding: 15px 25px;
-            border: 2px solid transparent;
-            border-radius: 50px; 
-            font-size: 1.1rem; 
-            outline: none;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            background: var(--white);
-            transition: all 0.3s ease;
-        }
-        #busca:focus { 
-            border-color: var(--stihl-orange);
-            box-shadow: 0 0 20px rgba(255,102,0,0.4);
-            transform: scale(1.02);
-        }
-
-        /* VITRINE */
-        .container { 
-            max-width: 1200px; 
-            margin: 30px auto; 
-            padding: 0 15px; 
-            position: relative;
-            z-index: 1;
-        }
-        
-        .grid-produtos { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
-            gap: 25px; 
-        }
-
-        /* CARD */
-        .card {
-            background: var(--white); 
-            border: 1px solid var(--stihl-border);
-            border-radius: 8px; 
-            padding: 20px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex; 
-            flex-direction: column; 
-            justify-content: space-between;
-            position: relative;
-            overflow: hidden;
-            animation: fadeIn 0.6s ease forwards;
-            cursor: pointer;
-        }
-
-        .card::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            padding: 2px; 
-            border-radius: 8px;
-            background: linear-gradient(90deg, transparent, var(--stihl-orange), transparent);
-            -webkit-mask: 
-                linear-gradient(#fff 0 0) content-box, 
-                linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            opacity: 0;
-            transition: opacity 0.3s;
-            pointer-events: none;
-            z-index: 10;
-        }
-
-        .card:hover::before {
-            opacity: 1;
-            animation: borderRotate 2s linear infinite;
-        }
-
-        @keyframes borderRotate {
-            from { background-position: -200% 0; }
-            to { background-position: 200% 0; }
-        }
-
-        .card-tag {
-            content: "ORIGINAL";
-            position: absolute;
-            top: 10px;
-            right: -30px;
-            background: #2ecc71;
-            color: white;
-            font-size: 10px;
-            font-weight: bold;
-            padding: 2px 30px;
-            transform: rotate(45deg);
-            z-index: 2;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .card:hover { 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-            transform: translateY(-12px) scale(1.02);
-            border-color: transparent;
-        }
-
-        .img-wrapper {
-            width: 100%;
-            height: 200px;
-            overflow: hidden; 
-            margin-bottom: 15px;
+            height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
-        }
-
-        .card img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: contain; 
-            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.05));
-        }
-
-        .card:hover img { 
-            transform: scale(1.15);
-        }
-
-        .card h3 { 
-            margin: 0 0 10px 0; 
-            color: var(--stihl-grey-dark); 
-            font-size: 1.1rem; 
-            text-transform: uppercase;
-            font-weight: 700;
-            height: 45px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
+            color: var(--white);
             overflow: hidden;
         }
 
-        .card .preco { 
-            color: var(--stihl-orange); 
-            font-size: 1.4rem; 
-            font-weight: 900; 
-            margin-bottom: 15px; 
-            display: block;
-            letter-spacing: -0.5px;
-        }
-
-        .btn-negociar {
-            background: var(--stihl-orange);
-            color: white;
-            border: none;
-            padding: 14px;
-            cursor: pointer;
-            font-weight: 700;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            width: 100%;
-            text-transform: uppercase;
-            transition: all 0.3s;
-            box-shadow: 0 4px 0 #d35400;
-            position: relative;
-            z-index: 15;
-        }
-        .btn-negociar:hover { 
-            background: var(--stihl-orange-hover); 
-            transform: translateY(-2px);
-            box-shadow: 0 6px 0 #d35400;
-            letter-spacing: 1px;
-        }
-        .btn-negociar:active { 
-            transform: translateY(2px);
-            box-shadow: 0 2px 0 #d35400;
-        }
-
-        @media (max-width: 600px) {
-            header h1 { font-size: 1.8rem; }
-            header { padding: 30px 0; }
-            .grid-produtos { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-            .card { padding: 12px; }
-            .img-wrapper { height: 130px; }
-            .card h3 { font-size: 0.85rem; height: 35px; }
-            .card .preco { font-size: 1.1rem; }
-            .btn-negociar { font-size: 0.7rem; padding: 10px 5px; box-shadow: 0 2px 0 #d35400; }
-        }
-
-        #modal-galeria {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); z-index: 11000;
-            justify-content: center; align-items: center; backdrop-filter: blur(8px);
-        }
-        .modal-content {
-            background: white; padding: 30px; max-width: 500px; width: 95%; 
-            position: relative; border-radius: 12px; text-align: center;
+        .container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 50px 30px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
             box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-            animation: zoomIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border-top: 5px solid var(--stihl-orange);
+            animation: slideUp 1s ease;
         }
-        @keyframes zoomIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        
-        .fechar-modal { position: absolute; top: -50px; right: 0; color: white; font-size: 40px; cursor: pointer; }
-        #img-principal { width: 100%; max-height: 300px; object-fit: contain; margin-bottom: 20px; }
-        #btn-whats-modal {
-            background: var(--whatsapp-green); color: white; border: none; padding: 18px; 
-            cursor: pointer; font-weight: bold; width: 100%; border-radius: 8px;
-            display: flex; justify-content: center; align-items: center; gap: 10px;
-            font-size: 1.1rem; transition: all 0.3s;
-        }
-        #btn-whats-modal:hover { transform: scale(1.03); background: #21bd5c; }
 
-        footer { 
-            background: var(--stihl-grey-dark); color: white; text-align: center; 
-            padding: 60px 20px; margin-top: 80px; border-top: 8px solid var(--stihl-orange);
-            position: relative; z-index: 1;
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .footer-logo { font-size: 2rem; font-weight: 900; margin-bottom: 15px; }
-        .footer-logo span { color: var(--stihl-orange); }
-        .dev-link { text-decoration: none; color: #777; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 8px; transition: 0.3s; }
-        .dev-link:hover { color: var(--white); }
-        .dev-icon { padding: 3px 10px; background: var(--stihl-orange); border-radius: 5px; color: white; font-weight: 900; font-size: 12px; }
+
+        .logo-img {
+            max-width: 250px;
+            height: auto;
+            margin-bottom: 30px;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
+        }
+
+        h1 { font-size: 1.8rem; margin-bottom: 15px; text-transform: uppercase; font-weight: 900; }
+        
+        p { font-size: 1.1rem; opacity: 0.8; margin-bottom: 30px; line-height: 1.5; }
+
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255,255,255,0.1);
+            border-top: 5px solid var(--stihl-orange);
+            border-radius: 50%;
+            margin: 0 auto 10px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .footer-text {
+            margin-top: 40px;
+            font-size: 0.8rem;
+            opacity: 0.5;
+        }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="header-content">
-        <h1>VET<span>MAQ</span></h1>
-        <div class="search-container">
-            <input type="text" id="busca" placeholder="O que você procura?">
-        </div>
-    </div>
-</header>
-
 <div class="container">
-    <div class="grid-produtos" id="vitrine"></div>
-</div>
-
-<div id="modal-galeria" onclick="fecharModal()">
-    <div class="modal-content" onclick="event.stopPropagation()">
-        <span class="fechar-modal" onclick="fecharModal()">&times;</span>
-        <img id="img-principal" src="">
-        <h2 id="modal-titulo"></h2>
-        <div class="preco" style="color: var(--stihl-orange); font-weight: 900; font-size: 1.8rem; margin-bottom: 10px;">Consulte Preço</div>
-        <p style="color: #666; margin-bottom: 20px;">Produto original STIHL com garantia e assistência técnica especializada.</p>
-        <button id="btn-whats-modal">
-            <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.438 9.889-9.886.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.89 4.44-9.892 9.886-.001 2.15.636 3.737 1.732 5.341l-1.01 3.691 3.77-.986z"/></svg>
-            CHAMAR NO WHATSAPP
-        </button>
+    
+    <div class="loader"></div>
+    
+    <h1>Estamos preparando novidades</h1>
+    <p>Nossa vitrine de equipamentos STIHL está passando por uma atualização técnica. Voltaremos em breve!</p>
+    
+    <div class="footer-text">
+        &copy; 2026 VETMAQ - Concessionária Autorizada STIHL
     </div>
 </div>
 
-<footer>
-    <div class="footer-logo">VET<span>MAQ</span></div>
-    <p>CONCESSIONÁRIA <strong>STIHL</strong></p>
-    <p style="font-size: 0.85rem; opacity: 0.6; max-width: 600px; margin: 10px auto;">Atendimento técnico especializado em toda a linha de motosserras, roçadeiras e equipamentos a bateria.</p>
-    <br>
-    <a href="https://wnetbr.github.io/-" target="_blank" class="dev-link">
-        DESENVOLVIDO POR <div class="dev-icon">WNET</div>
-    </a>
-</footer>
-
-<script>
-    const produtos = [
-        { nome: "Motosserra MS 162", preco: "Consulte Preço", fotos: ["https://images.tcdn.com.br/img/img_prod/972835/motosserra_stihl_ms_162_a_gasolina_7307_1_78b02ea9984159a379f64894e8f0153a.png"] },
-        { nome: "Motosserra MS 172", preco: "Consulte Preço", fotos: ["https://cdnv2.moovin.com.br/bimagril/imagens/produtos/det/motosserra-a-gasolina-ms-172-c-be-stihl-d81fc2672efe0e6a70c60e09596d34a7.webp"] },
-        { nome: "Motosserra MS 180 C", preco: "Consulte Preço", fotos: ["https://http2.mlstatic.com/D_NQ_NP_848061-MLA100008252295_122025-O.webp"] },
-        { nome: "Motosserra MS 182", preco: "Consulte Preço", fotos: ["https://cdnv2.moovin.com.br/bimagril/imagens/produtos/det/motosserra-a-gasolina-ms-182-stihl-f849887593ebf4182b74f88f434ff7ed.webp"] },
-        { nome: "Motosserra ms 212", preco: "Consulte Preço", fotos: ["https://cdn.awsli.com.br/1102/1102430/produto/2587280274b60df4fc4.jpg"] },
-        { nome: "Motosserra MS 250", preco: "Consulte Preço", fotos: ["https://images.tcdn.com.br/img/img_prod/972835/motosserra_stihl_ms_250_com_sabre_a_gasolina_2317_1_9da93dcb2c6ca4f9ea95664e2f0064c4.png"] },
-        { nome: "Motosserra MS 260", preco: "Consulte Preço", fotos: ["https://images.tcdn.com.br/img/img_prod/1340586/motosserra_a_gasolina_stihl_ms_260_37_1_298d44b33b60646e83a6f2cd75d64baa.jpg"] },
-        { nome: "Motosserra MS 363", preco: "Consulte Preço", fotos: ["https://www.stihl.com.br/content/dam/stihl/media/pim/117454.jpg"] },
-        { nome: "Motoserra MS 382", preco: "Consulte Preço", fotos: ["https://cdnv2.moovin.com.br/bimagril/imagens/produtos/det/motosserra-a-gasolina-ms-382-stihl-a727db31cee5ee5eb471f1688f5dd147.webp"] },
-        { nome: "Motosserra MS 462", preco: "Consulte Preço", fotos: ["https://cdnv2.moovin.com.br/bimagril/imagens/produtos/det/motosserra-a-gasolina-ms-462-stihl-7859bf2fb36bc70dc28c8b00c25d4314.webp"] },
-        { nome: "Motosserra MS 661", preco: "Consulte Preço", fotos: ["https://images.tcdn.com.br/img/img_prod/972835/motosserra_stihl_ms_661_com_sabre_a_gasolina_2303_1_b800c96ec8a3e31975e173a563ae654a.png"] },
-        { nome: "Roçadeira FSA 30", preco: "Consulte Preço", fotos: ["https://images.tcdn.com.br/img/img_prod/502737/rocadeira_a_bateria_stihl_fsa_30_240w_0_13_kw_kit_com_bateria_as2_carregador_al1_e_cabecote_de_nylon_4582_1_8a48d7671ae6c0760643d26e9c56331e_20251013164612.jpg"] },
-        { nome: "Roçadeira FS 38", preco: "Consulte Preço", fotos: ["https://cdn.shoppub.io/cdn-cgi/image/w=1000,h=1000,q=80,f=auto/csferramentas/media/uploads/produtos/foto/zxhqkssm/05646.jpg"] },
-        { nome: "Roçadeira FS 55 R", preco: "Consulte Preço", fotos: ["https://cdn.awsli.com.br/1102/1102430/produto/127225276/stihl-fs-55-trvpwe.jpg"] },
-        { nome: "Roçadeira FS 80", preco: "Consulte Preço", fotos: ["https://casadopicapau.vtexassets.com/arquivos/ids/167004/Stihl-fs80.png?v=638884383893970000"] },
-        { nome: "Roçadeira FS 85", preco: "Consulte Preço", fotos: ["https://stihlferramentas.vtexassets.com/arquivos/ids/156128/FS-85-1080X1080--1-.jpg?v=638790421501500000"] },
-        { nome: "Roçadeira FS 120", preco: "Consulte Preço", fotos: ["https://cdn.awsli.com.br/1102/1102430/produto/130066359/0d82f0f814.jpg"] },
-        { nome: "Roçadeira FS 161", preco: "Consulte Preço", fotos: ["https://images.tcdn.com.br/img/img_prod/972835/rocadeira_stihl_fs_161_a_gasolina_7157_2_aae02f1e144cd3388117fafafbd5e0f4.png"] },
-        { nome: "Roçadeira FS 221", preco: "Consulte Preço", fotos: ["https://cdn.awsli.com.br/1102/1102430/produto/237855304/rocadeira-stihl-fs-221-c-rgf185kn38.jpg"] },
-        { nome: "Roçadeira FS 291", preco: "Consulte Preço", fotos: ["https://camagri.com.br/wp-content/uploads/2025/03/291.webp"] },
-        { nome: "Roçadeira FS 460", preco: "Consulte Preço", fotos: ["https://casadopicapau.vtexassets.com/arquivos/ids/169028/Rocadeira-FS-460-Stihl-TrimCut-.png.png?v=638804240635970000"] },
-        { nome: "Pulverizador SR 420", preco: "Consulte Preço", fotos: ["https://stihlferramentas.vtexassets.com/arquivos/ids/155657/97307_SR420_HQ_P_2022-10_0001_EU---usable-RoW.jpg?v=638958378106900000"] },
-        { nome: "Pulverizador SR 430", preco: "Consulte Preço", fotos: ["https://www.kraakmantuinmachines.com/cdn/shop/products/img_6017cbd8-bc45-4912-b986-06265da8d706_500x.jpg?v=1677605060"] },
-        { nome: "Pulverizador SR 450", preco: "Consulte Preço", fotos: ["https://casadopicapau.vtexassets.com/arquivos/ids/167173/Pulverizador-Stihl-sr-450--1-.png?v=638641842198130000"] },
-        { nome: "Soprador BR 420", preco: "Consulte Preço", fotos: ["https://images.tcdn.com.br/img/img_prod/829607/soprador_a_combusto_stihl_br_420_1_20251203170328_d28e2095c7a7.png"] },
-        { nome: "Soprador BR 430", preco: "Consulte Preço", fotos: ["https://images.tcdn.com.br/img/img_prod/502737/soprador_costal_a_combustao_stihl_br_430_2_9kw_63_3cc_5032_1_e37f0bc6efd4b4236a08ebc4945b294e_20251013164950.jpg"] },
-        { nome: "Soprador BR 800", preco: "Consulte Preço", fotos: ["https://www.stihl.com.br/content/dam/stihl/media/pim/6789.jpg.transform/StihlImageGallery-mq4/img.jpg"] },
-        { nome: "SG 11", preco: "Consulte Preço", fotos: ["https://stihlferramentas.vtexassets.com/arquivos/ids/155485/36463_Z-SG11-S001_EU---usable-RoW.jpg?v=638334251658500000"] },
-        { nome: "SG 20", preco: "Consulte Preço", fotos: ["https://http2.mlstatic.com/D_NQ_NP_892930-MLA95878403968_102025-O.webp"] },
-        { nome: "SG 71", preco: "Consulte Preço", fotos: ["https://images.tcdn.com.br/img/img_prod/502737/pulverizador_costal_manual_stihl_sg_71_18_litros_5082_1_0df665a082377a364088d551440f4000_20251013165236.jpg"] },
-        { nome: "Soprador BG 50", preco: "Consulte Preço", fotos: ["https://images.tcdn.com.br/img/img_prod/1340586/sopradora_gasolina_stihl_bg_50_101_1_c2b8b27046cb975236a78bf4ef97ac3c.jpg"] },
-        { nome: "Soprador BG 56", preco: "Consulte Preço", fotos: ["https://cdnv2.moovin.com.br/bimagril/imagens/produtos/det/soprador-bg-56-a-gasolina-stihl-7e3279c5b61e9b01396877387e6c7f54.webp"] },
-        { nome: "Soprador BG 86 C-E", preco: "Consulte Preço", fotos: ["https://cdn.shoppub.io/cdn-cgi/image/w=1000,h=1000,q=80,f=auto/csferramentas/media/uploads/produtos/foto/eabpsttb/17724.jpg"] },
-        { nome: "Soprador Eletrico BGE 71", preco: "Consulte Preço", fotos: ["https://images.tcdn.com.br/img/img_prod/972835/soprador_stihl_bge_71_cod_4811_011_1505_127v_ou_4811_011_1506_220v_eletrico_4619_1_57af1ffebf67f8d6f7f3a32e17f99ae9.png"] },
-        { nome: "Soprador a Bateria BGA 45", preco: "Consulte Preço", fotos: ["https://www.stihl.com.br/content/dam/stihl/media/pim/43466.jpg"] },
-        { nome: "Soprador SH 56", preco: "Consulte Preço", fotos: ["https://gkseg.agilecdn.com.br/32690_1.jpg"] },
-        { nome: "Podador HS 45", preco: "Consulte Preço", fotos: ["https://images.tcdn.com.br/img/img_prod/1004808/podador_stihl_hs_45_a_gasolina_1_1_cv_697_1_4808947c5ded4432fae1f03fef76c045.jpg"] },
-        { nome: "Podador HSA 26", preco: "Consulte Preço", fotos: ["https://casadopicapau.vtexassets.com/arquivos/ids/167451-800-auto?v=638657163272770000&width=800&height=auto&aspect=true"] },
-        { nome: "Podador HSA 30", preco: "Consulte Preço", fotos: ["https://stihlferramentas.vtexassets.com/arquivos/ids/156074-800-auto?v=638422956587730000&width=800&height=auto&aspect=true"] },
-        { nome: "Podador HSA 45", preco: "Consulte Preço", fotos: ["https://cdnv2.moovin.com.br/bimagril/imagens/produtos/det/podador-hsa-45-a-bateria-com-carregador-stihl-5a69c604b3cd48ea73a89ccb1488a8d7.webp"] },
-        { nome: "Podador GTA 26", preco: "Consulte Preço", fotos: ["https://casadopicapau.vtexassets.com/arquivos/ids/167449-800-auto?v=638657140243370000&width=800&height=auto&aspect=true"] },
-        { nome: "Motor Estacionario EHC 405", preco: "Consulte Preço", fotos: ["https://www.stihl.com.br/content/dam/stihl/media/pim/130426.jpg"] },
-        { nome: "Motor Estacionario EHC 605", preco: "Consulte Preço", fotos: ["https://casadopicapau.vtexassets.com/arquivos/ids/167402-800-auto?v=638654538781370000&width=800&height=auto&aspect=true"] },
-        { nome: "Motor Estacionario EHC 705", preco: "Consulte Preço", fotos: ["https://www.ofertas.stihl.com.br/storage/products/3xc8wSy31jt5SDM8LPrVXSHxoLQaHREMI2QO19oM.jpg"] },
-        { nome: "Motor Estacionario EHC 905", preco: "Consulte Preço", fotos: ["https://www.stihl.com.br/content/dam/stihl/media/pim/130422.jpg"] },
-        { nome: "Motor Estacionario EHC 1105", preco: "Consulte Preço", fotos: ["https://www.stihl.com.br/content/dam/stihl/media/pim/100980.jpg"] },
-        { nome: "Motor Estacionario EHC 1505", preco: "Consulte Preço", fotos: ["https://contactostihl.com/images/productos/ehc-1505.jpg"] },
-        { nome: "Lavadora RE 80 X", preco: "Consulte Preço", fotos: ["https://tropicalcenter.vteximg.com.br/arquivos/ids/158075-450-450/bb287ee6f9.jpg?v=638463626347230000"] },
-        { nome: "Lavadora RE 80", preco: "Consulte Preço", fotos: ["https://www.triamanorte.com.br/uploads/triamanorte/produtos_imagens/801647291296229153825.jpg"] },
-        { nome: "Lavadora RE 90", preco: "Consulte Preço", fotos: ["https://www.triamanorte.com.br/uploads/triamanorte/produtos_imagens/9016472915921175527425.jpg"] },
-        { nome: "Lavadora RE 90 PLUS", preco: "Consulte Preço", fotos: ["https://gkseg.agilecdn.com.br/32089_2_1.jpg?v=306-1192172790"] },
-        { nome: "Lavadora RE 100", preco: "Consulte Preço", fotos: ["https://delupo.vtexassets.com/arquivos/ids/218922-800-auto?v=638820743901530000&width=800&height=auto&aspect=true"] },
-        { nome: "Lavadora RE 150", preco: "Consulte Preço", fotos: ["https://http2.mlstatic.com/D_NQ_NP_2X_778889-MLA100019452845_122025-F.webp"] },
-        { nome: "Cortador De Grama RMA 510", preco: "Consulte Preço", fotos: ["https://www.stihl.com.br/content/dam/stihl/media/pim/45042.jpg"] },
-        { nome: "Motor Bomba WP 300", preco: "Consulte Preço", fotos: ["https://casadopicapau.vtexassets.com/arquivos/ids/167114-800-auto?v=638639060593330000&width=800&height=auto&aspect=truepg"] },
-        { nome: "Motor Bomba WP 600", preco: "Consulte Preço", fotos: ["https://stihlferramentas.vtexassets.com/arquivos/ids/155950-800-auto?v=638380687305400000&width=800&height=auto&aspect=true"] },
-        { nome: "Multicutivador MH 710", preco: "Consulte Preço", fotos: ["https://fken.vtexassets.com/arquivos/ids/289422-800-800?v=638572632072500000&width=800&height=800&aspect=true"] },
-        { nome: "Podador HTA 86", preco: "Consulte Preço", fotos: ["https://www.farmaciagricola.com/images/prodotti/stihl/HTA-86/hta-86-stihl-potatore-a-batteria-sramatore-telescopico.webp"] },
-        { nome: "Podador HT 135", preco: "Consulte Preço", fotos: ["https://cdn2.cardume.digital/public/sites/ellomaquinas/images/posts/185/motopoda-ht-135-stihl-62e07ece2d587.png"] },
-        { nome: "Podador KA 85 R", preco: "Consulte Preço", fotos: ["https://gkseg.agilecdn.com.br/38684_1.jpg"] },
-        { nome: "Aspirador SEA 20", preco: "Consulte Preço", fotos: ["https://http2.mlstatic.com/D_NQ_NP_2X_888515-MLB92318371103_092025-F.webp"] },
-        { nome: "MOTOSSERRA MSA 120", preco: "Consulte Preço", fotos: ["https://m.media-amazon.com/images/I/51FgZ-OrANL._AC_UF894,1000_QL80_.jpg"] },
-        { nome: "MOTOSSERRA MSA 160", preco: "Consulte Preço", fotos: ["https://agroam.com.br/3316-medium_default/motosserra-a-bateria-msa-160-c-b-stihl.jpg"] },
-        { nome: "MOTOSSERRA MSA 200", preco: "Consulte Preço", fotos: ["https://maqpel.com.br/wp-content/uploads/2021/12/MSA-200.jpg"] },
-        { nome: "Bateria AS 2", preco: "Consulte Preço", fotos: ["https://www.stihl.com.br/content/dam/stihl/media/pim/12948.jpg"] },
-        { nome: "Bateria AK 20", preco: "Consulte Preço", fotos: ["https://www.stihl.com.br/content/dam/stihl/media/pim/50120.jpg"] },
-        { nome: "Bateria AP 200", preco: "Consulte Preço", fotos: ["https://casadopicapau.vtexassets.com/arquivos/ids/167153/Bateria-AP-200-Stihl.png?v=638640768888530000"] },
-        { nome: "Bateria AP 300", preco: "Consulte Preço", fotos: ["https://www.stihl.com.br/content/dam/stihl/media/pim/9497.jpg"] },
-        { nome: "Bateria AP 500", preco: "Consulte Preço", fotos: ["https://stihlferramentas.vtexassets.com/arquivos/ids/156368/AP-500S.jpg?v=638539062296100000"] },
-        { nome: "Carregador AL 1", preco: "Consulte Preço", fotos: ["https://danpler.com.br/wp-content/uploads/2024/08/15295928414_EA03-430-2509-4-685x685.png"] },
-        { nome: "Carregador AL 301", preco: "Consulte Preço", fotos: ["https://stihlferramentas.vtexassets.com/arquivos/ids/155930/103500_AL301-EU_HQ_P_2023-06_0002_EU---usable-RoW.jpg?v=638380639079500000"] },
-        { nome: "Carregador AL 500", preco: "Consulte Preço", fotos: ["https://images.tcdn.com.br/img/img_prod/502737/carregador_rapido_stihl_al_301_para_baterias_36v_ak_e_ap_5206_1_77b478c077019426aeb5ad3c1e9b02d3_20251013164915.jpg"] },
-        { nome: "Carregador Portatil PS 1", preco: "Consulte Preço", fotos: ["https://cdn.entrypoint.directory/assets/65903/produtos/802/aaaaaaaaaaaaaaaaaaaaa.png"] },
-        { nome: "Lubrificante 8017H 20L", preco: "Consulte Preço", fotos: ["https://gkseg.agilecdn.com.br/15518_1.jpg"] },
-        { nome: "Lubrificante 8017H 4L", preco: "Consulte Preço", fotos: ["https://www.stihl.com.br/content/dam/stihl/media/pim/132369.jpg"] },
-        { nome: "Lubrificante 8017H 500 ML", preco: "Consulte Preço", fotos: ["https://www.stihl.com.br/content/dam/stihl/media/pim/132370.jpg"] },
-        { nome: "Lubrificante Magnum 4L", preco: "Consulte Preço", fotos: ["https://images.tcdn.com.br/img/img_prod/502737/oleo_lubrificante_para_corrente_de_motosserra_stihl_magnum_4_litros_5130_1_a259c81be7b96c533a9e196c7f16fe81_20251013165923.jpg"] },
-        { nome: "Lubrificante Magnum 1L", preco: "Consulte Preço", fotos: ["https://images.tcdn.com.br/img/img_prod/759093/oleo_lubrificante_magnum_stihl_para_correntes_de_motosserra_1l_11863_1_7537efc3d7196ed440e1066fb3ee21f1.jpg"] },
-        { nome: "Lubrificante 10W30", preco: "Consulte Preço", fotos: ["https://casadopicapau.vtexassets.com/arquivos/ids/170211/oleo-motor-4-tempos-stihl-10w-30-sae-castrol-c.jpg?v=639003634547900000"] },
-        { nome: "Misturador de Combustivel", preco: "Consulte Preço", fotos: ["https://stihlferramentas.vtexassets.com/arquivos/ids/156304/Misturador-1x1.png?v=638918135171830000"] },
-        { nome: "Capacete florestal STIHL", preco: "Consulte Preço", fotos: ["https://images.tcdn.com.br/img/img_prod/502737/capacete_de_protecao_florestal_stihl_com_abafador_e_protetor_facial_5114_1_68c90f7d0e06fdba4c26d520d057f86e_20251013165925.jpg"] },
-    ];
-
-    const vitrine = document.getElementById('vitrine');
-    const campoBusca = document.getElementById('busca');
-    const modal = document.getElementById('modal-galeria');
-
-    function irParaWhats(nomeProduto) {
-        const numero = "5597991840894";
-        const mensagem = encodeURIComponent(`Olá! Gostaria de consultar o preço e disponibilidade do produto: ${nomeProduto}.`);
-        window.open(`https://wa.me/${numero}?text=${mensagem}`, '_blank');
-    }
-
-    function renderizar(lista) {
-        vitrine.innerHTML = "";
-        lista.forEach(p => {
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.onclick = () => abrirGaleria(p);
-            card.innerHTML = `
-                <div class="card-tag">ORIGINAL</div>
-                <div class="img-wrapper">
-                    <img src="${p.fotos[0]}" loading="lazy" onerror="this.src='https://via.placeholder.com/280x200?text=STIHL'">
-                </div>
-                <div>
-                    <h3>${p.nome}</h3>
-                    <span class="preco">${p.preco}</span>
-                </div>
-                <button class="btn-negociar" onclick="event.stopPropagation(); irParaWhats('${p.nome}')">Negociar</button>
-            `;
-            vitrine.appendChild(card);
-        });
-    }
-
-    function abrirGaleria(p) {
-        document.getElementById('img-principal').src = p.fotos[0];
-        document.getElementById('modal-titulo').innerText = p.nome;
-        document.getElementById('btn-whats-modal').onclick = () => irParaWhats(p.nome);
-        modal.style.display = "flex";
-        document.body.style.overflow = "hidden";
-    }
-
-    function fecharModal() { 
-        modal.style.display = "none"; 
-        document.body.style.overflow = "auto";
-    }
-
-    campoBusca.addEventListener('input', (e) => {
-        const termo = e.target.value.toLowerCase();
-        renderizar(produtos.filter(p => p.nome.toLowerCase().includes(termo)));
-    });
-
-    renderizar(produtos);
-</script>
 </body>
 </html>
