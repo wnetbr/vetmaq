@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manutenção Técnica</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --stihl-orange: #FF6600;
+            --stihl-orange-dark: #E65C00;
+            --stihl-grey-dark: #1A1A1A;
+            --stihl-grey-medium: #4A4A4A;
+            --stihl-grey-light: #F8F9FA;
+            --white: #FFFFFF;
+            --whatsapp-green: #25D366;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--stihl-grey-light);
+            color: var(--stihl-grey-dark);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        /* FUNDO PREMIUM E DISCRETO */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -2;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(255, 102, 0, 0.03) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(0, 0, 0, 0.02) 0%, transparent 40%),
+                linear-gradient(135deg, #FFFFFF 0%, #F1F1F1 100%);
+        }
+
+        /* TEXTURA DE GRADE SUTIL */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            opacity: 0.4;
+            background-image: linear-gradient(#DDD 1px, transparent 1px), linear-gradient(90deg, #DDD 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+        }
+
+        .main-card {
+            background: var(--white);
+            max-width: 550px;
+            width: 100%;
+            padding: 50px 40px;
+            border-radius: 4px; /* Estilo mais industrial/quadrado */
+            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+            border-left: 6px solid var(--stihl-orange);
+            position: relative;
+            animation: slideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .logo-container {
+            margin-bottom: 40px;
+            text-align: left;
+        }
+
+        .logo {
+            max-width: 200px;
+            height: auto;
+        }
+
+        .content {
+            text-align: left;
+        }
+
+        .status-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--stihl-orange);
+            margin-bottom: 15px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--stihl-orange);
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.9); opacity: 0.7; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(0.9); opacity: 0.7; }
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            color: var(--stihl-grey-dark);
+        }
+
+        p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--stihl-grey-medium);
+            margin-bottom: 35px;
+            font-weight: 300;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 28px;
+            border-radius: 2px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: var(--stihl-orange);
+            color: var(--white);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--stihl-orange-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 102, 0, 0.3);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--stihl-grey-dark);
+            border: 1px solid var(--stihl-border);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--stihl-grey-light);
+            border-color: var(--stihl-grey-dark);
+        }
+
+        .footer-info {
+            margin-top: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            color: #999;
+            border-top: 1px solid #EEE;
+            padding-top: 20px;
+        }
+
+        .brand-name {
+            font-weight: 700;
+            color: var(--stihl-grey-dark);
+        }
+
+        /* ANIMAÇÃO DE CARREGAMENTO SUTIL */
+        .loader-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 4px;
+            background: var(--stihl-orange);
+            width: 0%;
+            animation: loading 3s infinite ease-in-out;
+        }
+
+        @keyframes loading {
+            0% { width: 0%; left: 0; }
+            50% { width: 100%; left: 0; }
+            100% { width: 0%; left: 100%; }
+        }
+
+        @media (max-width: 600px) {
+            .main-card {
+                padding: 40px 25px;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            .actions {
+                flex-direction: column;
+            }
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-card">
+        <div class="logo-container">
+            <img src="https://i.postimg.cc/dVSHHRFM/logo-(1).png" alt="VETMAQ" class="logo">
+        </div>
+
+        <div class="content">
+            <div class="status-label">
+                <span class="status-dot"></span>
+                Manutenção do Sistema
+            </div>
+            
+            <h1>Estamos preparando novidades para você.</h1>
+            
+            <p>Nossa plataforma está passando por uma manutenção técnica programada para melhorar a performance e segurança. Em breve, estaremos de volta com todo o nosso catálogo de máquinas e ferramentas.</p>
+
+            <div class="actions">
+                <a href="https://wa.me/5597981107634" class="btn btn-primary">
+                    Atendimento via WhatsApp
+                </a>
+                <a href="clubwnet@gmail.com" class="btn btn-outline">
+                    Enviar E-mail
+                </a>
+            </div>
+        </div>
+
+        <div class="footer-info">
+            <div>&copy; 2026 <span class="brand-name">VETMAQ</span></div>
+            <div>Excelência em Máquinas</div>
+        </div>
+
+        <div class="loader-bar"></div>
+    </div>
+
+</body>
+</html>
